@@ -8,13 +8,14 @@
 
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
-//#import "Card.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *matchModeSegment;
+@property (weak, nonatomic) IBOutlet UILabel *historyLabel;
 @end
 
 @implementation CardGameViewController
@@ -38,6 +39,14 @@
     [self updateUI];
 }
 
+- (IBAction)touchDealButton:(UIButton *)sender {
+    self.matchModeSegment.enabled = YES;
+    self.historyLabel.text = @"No card chosen";
+}
+
+- (IBAction)sliderHistory:(UISlider *)sender {
+}
+
 - (void)updateUI
 {
     for (UIButton *cardButton in self.cardButtons) {
@@ -47,6 +56,7 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+        self.historyLabel.text = [self.game.history lastObject];
     }
 }
 

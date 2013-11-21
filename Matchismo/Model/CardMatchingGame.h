@@ -19,5 +19,7 @@
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic) NSUInteger matchMode;
+@property (nonatomic, strong) NSMutableArray *history; // of NSString
 
 @end

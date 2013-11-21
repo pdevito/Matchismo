@@ -18,11 +18,18 @@
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
+static const int ADDITIONAL_MATCH_BONUS = 2;
 
 - (NSMutableArray *)cards
 {
     if (!_cards) _cards = [[NSMutableArray alloc] init];
     return _cards;
+}
+
+- (NSMutableArray *)history
+{
+    if (!_history) _history = [[NSMutableArray alloc] init];
+    return _history;
 }
 
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
@@ -57,9 +64,11 @@ static const int COST_TO_CHOOSE = 1;
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
+    NSString *currentMove = card.contents;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
+            currentMove = [currentMove stringByAppendingString:@" flipped down."];
         }
         else {
             // match against other chosen cards
@@ -70,10 +79,12 @@ static const int COST_TO_CHOOSE = 1;
                         self.score += matchScore * MATCH_BONUS;
                         card.matched = YES;
                         otherCard.matched = YES;
+                        currentMove = [NSString stringWithFormat:@"Matched%@ %@ for %d points.",card.contents,otherCard.contents,self.score];
                     }
                     else {
                         self.score -= MISMATCH_PENALTY;
                         otherCard.chosen = NO;
+                        currentMove = [NSString stringWithFormat:@"%@ %@ don't match! %d point penalty!",card.contents,otherCard.contents,MISMATCH_PENALTY];
                     }
                     break; // can only choose 2 cards for now
                 }
@@ -82,6 +93,8 @@ static const int COST_TO_CHOOSE = 1;
             card.chosen = YES;
         }
     }
+    NSLog(@"%@",currentMove);
+    [self.history addObject:currentMove];
 }
 
 @end
