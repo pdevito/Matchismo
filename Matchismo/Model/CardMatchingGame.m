@@ -50,9 +50,8 @@ static const int ADDITIONAL_MATCH_BONUS = 2;
     return self;
 }
 
-- (instancetype)init
+- (instancetype)init //do nothing since this initializer is illegal
 {
-    //do nothing since this initializer is illegal
     return nil;
 }
 
@@ -64,31 +63,46 @@ static const int ADDITIONAL_MATCH_BONUS = 2;
 - (void)chooseCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];
+    NSMutableArray *chosenCards = [[NSMutableArray alloc] init];
     NSString *currentMove = card.contents;
     if (!card.isMatched) {
         if (card.isChosen) {
             card.chosen = NO;
             currentMove = [currentMove stringByAppendingString:@" flipped down."];
         }
-        else {
-            // match against other chosen cards
+        else { // match against other chosen cards
+            // create an array of chosen cards to pass to match
             for (Card *otherCard in self.cards) {
                 if (otherCard.isChosen && !otherCard.isMatched) {
-                    int matchScore = [card match:@[otherCard]];
-                    if (matchScore) {
-                        self.score += matchScore * MATCH_BONUS;
-                        card.matched = YES;
-                        otherCard.matched = YES;
-                        currentMove = [NSString stringWithFormat:@"Matched%@ %@ for %d points.",card.contents,otherCard.contents,self.score];
-                    }
-                    else {
-                        self.score -= MISMATCH_PENALTY;
-                        otherCard.chosen = NO;
-                        currentMove = [NSString stringWithFormat:@"%@ %@ don't match! %d point penalty!",card.contents,otherCard.contents,MISMATCH_PENALTY];
-                    }
-                    break; // can only choose 2 cards for now
+                    [chosenCards addObject:otherCard];
                 }
             }
+            if ([chosenCards count] == self.matchMode - 1) {
+                int matchScore = [card match:chosenCards];
+                if (matchScore) {
+                    self.score += matchScore * MATCH_BONUS;
+                    card.matched = YES;
+                    for (Card *otherCard in chosenCards) {
+                        otherCard.matched = YES;
+                        currentMove = [currentMove stringByAppendingString:otherCard.contents];
+                    }
+                    currentMove = [NSString stringWithFormat:@"Matched%@ for %d points.",currentMove,matchScore * MATCH_BONUS];
+                }
+                else {
+                    self.score -= MISMATCH_PENALTY;
+                    for (Card *otherCard in chosenCards) {
+                        otherCard.chosen = NO;
+                        currentMove = [currentMove stringByAppendingString:otherCard.contents];
+                    }
+                    currentMove = [NSString stringWithFormat:@"%@ don't match! %d point penalty!",currentMove,MISMATCH_PENALTY];
+                }
+            }
+                        /*for (Card *otherCard in self.cards) {
+                if (otherCard.isChosen && !otherCard.isMatched) {
+                    int matchScore = [card match:@[otherCard]];
+                                        break; // can only choose 2 cards for now
+                }
+            }*/
             self.score -= COST_TO_CHOOSE;
             card.chosen = YES;
         }

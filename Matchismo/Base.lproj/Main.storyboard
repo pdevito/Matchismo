@@ -386,7 +386,7 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No card chosen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9V4-pS-azp">
                                 <rect key="frame" x="20" y="434" width="232" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aix-9w-5PY">
@@ -415,7 +415,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="HMA-NP-ajr">
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="HMA-NP-ajr">
                                 <rect key="frame" x="18" y="393" width="188" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
@@ -427,6 +427,7 @@
                     </view>
                     <connections>
                         <outlet property="historyLabel" destination="9V4-pS-azp" id="AuL-dI-2Kk"/>
+                        <outlet property="historySlider" destination="HMA-NP-ajr" id="W4G-xw-BB6"/>
                         <outlet property="matchModeSegment" destination="iDJ-dv-vVd" id="gxv-Ib-31z"/>
                         <outlet property="scoreLabel" destination="Kny-6O-15X" id="Rya-7K-cTu"/>
                         <outletCollection property="cardButtons" destination="WRg-bg-CDE" id="b0r-t9-YBp"/>

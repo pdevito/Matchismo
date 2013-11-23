@@ -13,14 +13,24 @@
 - (int)match:(NSArray *)otherCards
 {
     int score = 0;
-    if ([otherCards count] == 1) {
-        PlayingCard *otherCard = [otherCards firstObject];
-        if (otherCard.rank == self.rank) {
-            score = 4;
+    int tempScore = 0;
+    NSMutableArray *searchCards = [[NSMutableArray alloc] init]; // hold temp array of Cards to compare
+    NSArray *cards = [otherCards arrayByAddingObject:self];
+    for (PlayingCard *card in cards) {
+        [searchCards setArray:cards];
+        [searchCards removeObject:card];
+        int tempRankScore = 0;
+        int tempSuitScore = 0;
+        for (PlayingCard *matchCard in searchCards) {
+            if (matchCard.rank == card.rank) {
+                tempRankScore += 4;
+            }
+            if ([matchCard.suit isEqualToString:card.suit]) {
+                tempSuitScore += 1;
+            }
         }
-        else if ([otherCard.suit isEqualToString:self.suit]) {
-            score = 1;
-        }
+        tempScore = (tempRankScore > tempSuitScore) ? tempRankScore : tempSuitScore;
+        score = (score < tempScore) ? tempScore : score;
     }
     return score;
 }
