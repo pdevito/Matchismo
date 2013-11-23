@@ -15,17 +15,17 @@
     int score = 0;
     int tempScore = 0;
     NSMutableArray *searchCards = [[NSMutableArray alloc] init]; // hold temp array of Cards to compare
-    NSArray *cards = [otherCards arrayByAddingObject:self];
-    for (PlayingCard *card in cards) {
-        [searchCards setArray:cards];
-        [searchCards removeObject:card];
+    NSArray *matchCards = [otherCards arrayByAddingObject:self]; // create array of all chosen Cards
+    for (PlayingCard *compareCard in matchCards) {
+        [searchCards setArray:matchCards]; // duplicate matchCards over to searchCards
+        [searchCards removeObject:compareCard]; // remove our current comparison Card
         int tempRankScore = 0;
         int tempSuitScore = 0;
-        for (PlayingCard *matchCard in searchCards) {
-            if (matchCard.rank == card.rank) {
+        for (PlayingCard *card in searchCards) { 
+            if (card.rank == compareCard.rank) {
                 tempRankScore += 4;
             }
-            if ([matchCard.suit isEqualToString:card.suit]) {
+            if ([card.suit isEqualToString:compareCard.suit]) {
                 tempSuitScore += 1;
             }
         }

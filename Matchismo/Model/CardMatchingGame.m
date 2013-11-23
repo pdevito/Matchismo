@@ -18,7 +18,6 @@
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
-static const int ADDITIONAL_MATCH_BONUS = 2;
 
 - (NSMutableArray *)cards
 {
@@ -77,6 +76,7 @@ static const int ADDITIONAL_MATCH_BONUS = 2;
                     [chosenCards addObject:otherCard];
                 }
             }
+            // when we reach the number of cards to be matched
             if ([chosenCards count] == self.matchMode - 1) {
                 int matchScore = [card match:chosenCards];
                 if (matchScore) {
@@ -97,12 +97,6 @@ static const int ADDITIONAL_MATCH_BONUS = 2;
                     currentMove = [NSString stringWithFormat:@"%@ don't match! %d point penalty!",currentMove,MISMATCH_PENALTY];
                 }
             }
-                        /*for (Card *otherCard in self.cards) {
-                if (otherCard.isChosen && !otherCard.isMatched) {
-                    int matchScore = [card match:@[otherCard]];
-                                        break; // can only choose 2 cards for now
-                }
-            }*/
             self.score -= COST_TO_CHOOSE;
             card.chosen = YES;
         }
