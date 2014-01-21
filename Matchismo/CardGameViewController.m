@@ -7,7 +7,7 @@
 //
 
 #import "CardGameViewController.h"
-#import "PlayingCardDeck.h"
+#import "Deck.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
@@ -28,10 +28,9 @@
     return _game;
 }
 
-- (Deck *)createDeck
+- (Deck *)createDeck // abstract
 {
-    return [[PlayingCardDeck alloc] init];
-    NSLog(@"Creating Deck");
+    return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender
