@@ -10,6 +10,9 @@
 
 @implementation PlayingCard
 
+#define RANK_MATCH_SCORE 4
+#define SUIT_MATCH_SCORE 1
+
 - (int)match:(NSArray *)otherCards
 {
     int score = 0;
@@ -23,10 +26,10 @@
         int tempSuitScore = 0;
         for (PlayingCard *card in searchCards) { 
             if (card.rank == compareCard.rank) {
-                tempRankScore += 4;
+                tempRankScore += RANK_MATCH_SCORE;
             }
             if ([card.suit isEqualToString:compareCard.suit]) {
-                tempSuitScore += 1;
+                tempSuitScore += SUIT_MATCH_SCORE;
             }
         }
         tempScore = (tempRankScore > tempSuitScore) ? tempRankScore : tempSuitScore;

@@ -8,6 +8,9 @@
 
 #import "Card.h"
 
+// will change this magic number out later.
+#define MAX_COUNT 3
+
 @interface SetCard : Card
 
 @property (strong, nonatomic) NSString *color;
@@ -15,11 +18,11 @@
 @property (strong, nonatomic) NSString *shading;
 @property (nonatomic) NSUInteger count;
 
-+ (NSArray *)validShapes;
++ (NSArray *)validSymbols;
 + (NSArray *)validColors;
 + (NSArray *)validShadings;
 
-//- (NSUInteger) maxCount;
+- (NSUInteger) maxCount;
 
 @end
 
